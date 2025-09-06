@@ -1,0 +1,41 @@
+/* Navbar is fixed */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;      /* Sidebar width */
+  height: 100vh;
+  background: var(--primary-color); /* dynamic background */
+  color: var(--text-color);
+  padding: 20px;
+  box-shadow: 2px 0px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Main content adjusted for fixed navbar */
+.main-content {
+  margin-left: 220px; /* same as navbar width */
+  padding: 2rem;
+  background: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  box-sizing: border-box;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Responsive: stack navbar on top */
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .main-content {
+    margin-left: 0;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+}

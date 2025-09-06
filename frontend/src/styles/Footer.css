@@ -1,0 +1,57 @@
+/* Footer container */
+.footer {
+  background-color: var(--card-bg); /* dynamic background based on theme */
+  color: var(--text-color);         /* dynamic text color */
+  padding: 2.5rem 1rem;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Paragraph spacing */
+.footer p {
+  margin: 0.5rem 0;
+}
+/* Hover effect for links */
+.footer a {
+  position: relative;
+  overflow: hidden; /* ensures underline stays inside */
+}
+
+.footer a:hover {
+  color: var(--secondary-color); /* theme-based hover color */
+  transform: scale(2); /* slightly bigger for emphasis */
+  text-shadow: 0 0 8px var(--secondary-color); /* glowing effect */
+}
+
+/* Animated underline */
+.footer a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: var(--secondary-color);
+  transition: width 0.3s ease;
+}
+
+.footer a:hover::after {
+  width: 150%;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer {
+    font-size: 0.9rem;
+    padding: 2rem 1rem;
+  }
+
+  .footer a {
+    display: inline-block;
+    margin: 0 0.3rem;
+  }
+}

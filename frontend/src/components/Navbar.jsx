@@ -1,17 +1,44 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import SchoolLogin from "./SchoolLogin";
+import "../styles/Navbar.css";
 
-const Navbar = () => {
+function Navbar() {
+  const [theme, setTheme] = useState("light");
+
+  // Apply theme to <body>
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
-    <nav style={{ padding: "1rem", backgroundColor: "#333", color: "#fff" }}>
-      <h1>Photo Studio</h1>
-      <ul style={{ display: "flex", gap: "1rem", listStyle: "none" }}>
-        <li><a href="#about" style={{ color: "#fff" }}>About</a></li>
-        <li><a href="#services" style={{ color: "#fff" }}>Services</a></li>
-        <li><a href="#portfolio" style={{ color: "#fff" }}>Portfolio</a></li>
-        <li><a href="#contact" style={{ color: "#fff" }}>Contact</a></li>
-      </ul>
-    </nav>
+    <div className="navbar">
+      {/* Logo */}
+      <h1 className="logo">Yadav Photo Studio</h1>
+      <nav className="nav-links">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <button className="theme-toggle-btn" onClick={toggleTheme}>
+              {theme === "light" ? "🌙  dark" : "☀️ light"}
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      {/* School Panel Login */}
+      <div className="right-section">
+        <SchoolLogin />
+      </div>
+     
+    </div>
   );
-};
+}
 
 export default Navbar;
