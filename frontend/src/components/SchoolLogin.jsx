@@ -1,18 +1,28 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import { SchoolAuthContext } from "../context/SchoolPanelAuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SchoolLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useContext(SchoolAuthContext);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      console.log("Login attempt:", email, password);
-      setError("");
-    } else {
+    setError("");
+
+    if (!email || !password) {
       setError("Please enter email and password");
+      return;
+    }
+
+    try {
+      await login(email, password); // Uses SchoolAuthContext login
+      navigate("/student/dashboard"); // Redirect to student dashboard after login
+    } catch (err) {
+      setError(err.message || "Failed to login. Check credentials.");
     }
   };
 

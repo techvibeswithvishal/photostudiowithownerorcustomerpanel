@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase/firebase.js";
+import { db } from "../../firebase/firebase.js";
 import { collection, getDocs, deleteDoc, doc, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
@@ -13,7 +13,6 @@ const Dashboard = ({ schoolId }) => {
       const studentList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setStudents(studentList);
     };
-
     fetchStudents();
   }, [schoolId]);
 
@@ -27,16 +26,20 @@ const Dashboard = ({ schoolId }) => {
   return (
     <div style={{ padding: "2rem" }}>
       <h2>School Dashboard</h2>
-      <Link to="/add-student">
+      <Link to="/student/add">
         <button>Add Student</button>
       </Link>
       <table border="1" cellPadding="10" style={{ marginTop: "1rem", width: "100%" }}>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Roll No</th>
+            <th>Father's Name</th>
             <th>Class</th>
-            <th>Contact</th>
+            <th>DOB</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Photo</th>
+            <th>Attachment</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -44,11 +47,15 @@ const Dashboard = ({ schoolId }) => {
           {students.map(student => (
             <tr key={student.id}>
               <td>{student.name}</td>
-              <td>{student.rollNo}</td>
-              <td>{student.class}</td>
-              <td>{student.contact}</td>
+              <td>{student.fatherName}</td>
+              <td>{student.studentClass}</td>
+              <td>{student.dob}</td>
+              <td>{student.mobile}</td>
+              <td>{student.address}</td>
+              <td>{student.photoURL && <img src={student.photoURL} alt="student" width="50" />}</td>
+              <td>{student.attachmentURL && <a href={student.attachmentURL} target="_blank" rel="noreferrer">View</a>}</td>
               <td>
-                <Link to={`/edit-student/${student.id}`}><button>Edit</button></Link>
+                <Link to={`/student/edit/${student.id}`}><button>Edit</button></Link>
                 <button onClick={() => handleDelete(student.id)}>Delete</button>
               </td>
             </tr>

@@ -2,51 +2,81 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const { generateCSV } = require("./utils");
 
-// Initialize Firebase Admin SDK
 admin.initializeApp();
 const db = admin.firestore();
 
 /**
- * Cloud Function: Download Students as CSV
- * Usage: 
- *   GET https://<your-region>-<project>.cloudfunctions.net/downloadStudentsCSV?schoolId=123
+ * Cloud Function: Create School Account (Owner Only)
  */
-exports.downloadStudentsCSV = functions.https.onRequest(async (req, res) => {
+exports.createSchoolAccount = functions.https.onCall(async (data, context) => {
+  // ✅ Security: Only allow owner
+  if (!context.auth || context.auth.token.role !== "owner") {
+    throw new functions.https.HttpsError(
+      "permission-denied",
+      "Only the owner can create schools."
+    );
+  }
+
+  const { name, email } = data;
+  if (!name || !email) {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      "School name and email are required."
+    );
+  }
+
   try {
-    const schoolId = req.query.schoolId;
+    // Generate random password
+    const password = Math.random().toString(36).slice(-8);
 
-    if (!schoolId) {
-      return res.status(400).send("❌ Missing schoolId in request query.");
-    }
+    // Create Firebase Auth user
+    const userRecord = await admin.auth().createUser({
+      email,
+      password,
+      displayName: name,
+    });
 
-    // Fetch students of given schoolId
-    const studentsSnapshot = await db
-      .collection("students")
-      .where("schoolId", "==", schoolId)
-      .get();
+    // ✅ Assign school role
+    await admin.auth().setCustomUserClaims(userRecord.uid, { role: "school" });
 
-    if (studentsSnapshot.empty) {
-      return res.status(404).send("⚠️ No students found for this school.");
-    }
+    // Save school in Firestore
+    await db.collection("schools").doc(userRecord.uid).set({
+      name,
+      email,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
 
-    const students = studentsSnapshot.docs.map(doc => ({
+    return {
+      message: "✅ School created successfully",
+      schoolId: userRecord.uid,
+      password, // return password to owner
+    };
+  } catch (error) {
+    throw new functions.https.HttpsError("internal", error.message);
+  }
+});
+
+/**
+ * Cloud Function: List All Schools (Owner Only)
+ */
+exports.listSchools = functions.https.onCall(async (data, context) => {
+  // ✅ Security: Only allow owner
+  if (!context.auth || context.auth.token.role !== "owner") {
+    throw new functions.https.HttpsError(
+      "permission-denied",
+      "Only the owner can view schools."
+    );
+  }
+
+  try {
+    const snapshot = await db.collection("schools").get();
+    const schools = snapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
     }));
 
-    // Generate CSV using utils
-    const csv = generateCSV(students);
-
-    // Send CSV as response
-    res.setHeader("Content-Type", "text/csv");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="students_${schoolId}.csv"`
-    );
-    res.status(200).send(csv);
-
+    return { schools };
   } catch (error) {
-    console.error("🔥 Error generating CSV:", error);
-    res.status(500).send("Internal Server Error. Check function logs.");
+    throw new functions.https.HttpsError("internal", error.message);
   }
 });
