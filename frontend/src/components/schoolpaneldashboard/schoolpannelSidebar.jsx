@@ -18,43 +18,41 @@ const SchoolpannelSidebar = ({ activeTab, setActiveTab }) => {
           ⬅ Go Back Home
         </li>
 
-        {/* Divider 1: Drive */}
+        {/* Divider 1: MongoDB */}
+        <li className="sidebar-section">MongoDB</li>
+        <li
+          className={`sidebar-item ${activeTab === "mongodb-add" ? "active" : ""}`}
+          onClick={() => setActiveTab("mongodb-add")}
+        >
+          Add Student
+        </li>
+        <li
+          className={`sidebar-item ${activeTab === "mongodb-list" ? "active" : ""}`}
+          onClick={() => setActiveTab("mongodb-list")}
+        >
+          Student List
+        </li>
+
+        <hr className="sidebar-divider" />
+
+        {/* Divider 2: Drive */}
         <li className="sidebar-section">Drive</li>
         <li
-          className={`sidebar-item ${
-            activeTab === "drive-form" ? "active" : ""
-          }`}
+          className={`sidebar-item ${activeTab === "drive-form" ? "active" : ""}`}
           onClick={() => setActiveTab("drive-form")}
         >
           Add Student (Google Form)
         </li>
         <li
-          className={`sidebar-item ${
-            activeTab === "drive-sheet" ? "active" : ""
-          }`}
+          className={`sidebar-item ${activeTab === "drive-sheet" ? "active" : ""}`}
           onClick={() => setActiveTab("drive-sheet")}
         >
           Student List (Google Sheet)
         </li>
 
-        <hr className="sidebar-divider" />
-
-        {/* Divider 2: Firebase */}
-        <li className="sidebar-section">Firebase</li>
-        <li
-          className={`sidebar-item ${
-            activeTab === "firebase-add" ? "active" : ""
-          }`}
-          onClick={() => setActiveTab("firebase-add")}
-        >
-          Add Student (Firebase)
-        </li>
-
         {/* Dashboard */}
         <li
-          className={`sidebar-item ${
-            activeTab === "dashboard" ? "active" : ""
-          }`}
+          className={`sidebar-item ${activeTab === "dashboard" ? "active" : ""}`}
           onClick={() => setActiveTab("dashboard")}
         >
           Dashboard

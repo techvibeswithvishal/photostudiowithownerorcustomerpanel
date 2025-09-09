@@ -1,49 +1,42 @@
 import React, { createContext, useState, useEffect } from "react";
-import { auth } from "../firebase/firebase";
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged, getIdTokenResult } from "firebase/auth";
+import axios from "axios";
 
 export const SchoolAuthContext = createContext();
 
 export const SchoolAuthProvider = ({ children }) => {
-  const [schoolUser, setSchoolUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [schoolUser, setSchoolUser] = useState(
+    JSON.parse(localStorage.getItem("schoolUser")) || null
+  );
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const token = await getIdTokenResult(user);
-        if (token.claims.role === "school") {
-          setSchoolUser(user); // ✅ set correctly
-        } else {
-          await signOut(auth);
-          setSchoolUser(null);
-        }
-      } else {
-        setSchoolUser(null);
-      }
-      setLoading(false);
-    });
+  const backendUrl = import.meta.env.VITE_BACKEND_URL; // from .env
 
-    return () => unsub();
-  }, []);
-
+  // Login function
   const login = async (email, password) => {
-  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    setLoading(true);
+    try {
+      const res = await axios.post(`${backendUrl}/api/school/login`, { email, password });
+      
+      // Backend should return { token, school }
+      const { token, school } = res.data;
 
-  // Refresh token to get claims immediately
-  await userCredential.user.getIdToken(true);
+      // Save token + user info in localStorage
+      localStorage.setItem("schoolToken", token);
+      localStorage.setItem("schoolUser", JSON.stringify(school));
 
-  const token = await getIdTokenResult(userCredential.user);
-  if (token.claims.role !== "school") {
-    await signOut(auth);
-    throw new Error("This account is not a school account.");
-  }
-  setSchoolUser(userCredential.user);
-};
+      setSchoolUser(school);
+      setLoading(false);
+      return school;
+    } catch (err) {
+      setLoading(false);
+      throw err;
+    }
+  };
 
-
-  const logout = async () => {
-    await signOut(auth);
+  // Logout function
+  const logout = () => {
+    localStorage.removeItem("schoolToken");
+    localStorage.removeItem("schoolUser");
     setSchoolUser(null);
   };
 

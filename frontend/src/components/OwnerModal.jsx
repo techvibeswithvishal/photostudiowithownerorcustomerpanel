@@ -1,90 +1,47 @@
-// src/components/OwnerModal.jsx
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { OwnerAuthContext } from "../context/OwnerAuthContext";
+import React, { useState } from "react";
+import { useOwnerAuth } from "../context/OwnerAuthContext"; // use hook
+import { useNavigate } from "react-router-dom"; // for redirect
+import "../styles/Navbar.css";
 
 const OwnerModal = ({ onClose }) => {
+  const { login } = useOwnerAuth();
+  const navigate = useNavigate(); // navigation
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  const { login, logout, user } = useContext(OwnerAuthContext); // ✅ use context
+  const handleLogin = async () => {
+    const res = await login(email, password);
 
-  // Owner login via context
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      const res = await login(email, password); // ✅ use context login
-      if (!res.success) {
-        setError(res.error);
-        return;
-      }
-      navigate("/owner/dashboard"); // redirect after login
+    if (res.success) {
       onClose(); // close modal
-    } catch (err) {
-      setError(err.message || "Failed to login.");
+      navigate("/owner/dashboard"); // redirect to dashboard
+    } else {
+      setError(res.error); // show invalid credentials error
     }
   };
 
-  // Logout owner
-  const handleLogout = async () => {
-    await logout(); // ✅ use context logout
-    navigate("/"); // redirect to home
-    onClose();
-  };
-
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 9999,
-      }}
-    >
-      <div style={{ width: "400px", background: "#fff", padding: 20, borderRadius: 8 }}>
-        <button onClick={onClose} style={{ float: "right" }}>
-          Close
-        </button>
-
-        {!user ? (
-          <>
-            <h3>Owner Sign In</h3>
-            <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column" }}>
-              <input
-                type="email"
-                placeholder="Owner Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                style={{ marginBottom: 10 }}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                style={{ marginBottom: 10 }}
-              />
-              <button type="submit">Sign In</button>
-            </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-          </>
-        ) : (
-          <>
-            <h3>Owner Panel</h3>
-            <button onClick={handleLogout} style={{ marginBottom: 10 }}>
-              Logout
-            </button>
-            <p>Redirecting to Owner Dashboard...</p>
-          </>
-        )}
+    <div className="owner-login-overlay">
+      <div className="owner-login-box">
+        <h2>Owner Login</h2>
+        <input
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Enter password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <div>
+          <button onClick={handleLogin}>Sign In</button>
+          <button onClick={onClose}>Cancel</button>
+        </div>
       </div>
     </div>
   );

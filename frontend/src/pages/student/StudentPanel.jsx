@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import SchoolpannelSidebar from "../../components/schoolpaneldashboard/schoolpannelSidebar";
-import SchoolpannelNavbar from "../../components/schoolpaneldashboard/schoolpannelNavbar";
+import SchoolpannelSidebar from "../../components/schoolpaneldashboard/SchoolpannelSidebar";
+import SchoolpannelNavbar from "../../components/schoolpaneldashboard/SchoolpannelNavbar";
 
 import Dashboard from "./Dashboard";
 import AddStudent from "./AddStudent";
 import EditStudent from "./EditStudent";
 import GoogleFormLink from "../drive/GoogleFormLink";
 import GoogleSheetView from "../drive/GoogleSheetView";
-
-
 
 const StudentPanel = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -24,11 +22,11 @@ const StudentPanel = () => {
       case "drive-sheet":
         return <GoogleSheetView />;
 
-      // Firebase section
-      case "firebase-add":
+      // MongoDB student management
+      case "add-student":
         return <AddStudent />;
-      case "firebase-list":
-        return <EditStudent />; // Or Firebase student list component
+      case "edit-student":
+        return <EditStudent />;
 
       default:
         return <Dashboard />;

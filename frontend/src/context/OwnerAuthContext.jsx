@@ -1,42 +1,64 @@
-// src/context/OwnerAuthContext.jsx
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { auth } from "../firebase/firebase.js";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import React, { createContext, useContext, useState } from "react";
+import axios from "axios";
 
-// ✅ Named export for context
 export const OwnerAuthContext = createContext();
 
-// ✅ Named export for provider
 export const OwnerAuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);  
-  const [loading, setLoading] = useState(true);
-const login = async (email, password) => {
-  try {
-    const res = await signInWithEmailAndPassword(auth, email, password);
+  const [loading, setLoading] = useState(false);
 
-    // Refresh token to get custom claims immediately
-    await res.user.getIdToken(true);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-    setUser(res.user);
-    return { success: true };
-  } catch (error) {
-    console.error(error);
-    return { success: false, error: error.message };
-  }
-};
+  // Login using backend API
+  const login = async (email, password) => {
+    setLoading(true);
+    try {
+      const res = await axios.post(`${backendUrl}/api/owner/login`, {
+        email,
+        password,
+      });
 
+      if (res.data.success) {
+        // Save JWT in localStorage
+        localStorage.setItem("ownerToken", res.data.token);
 
-  const logout = async () => {
-    await signOut(auth);
+        // Save owner info in state
+        setUser(res.data.owner);
+        setLoading(false);
+        return { success: true };
+      } else {
+        setLoading(false);
+        return { success: false, error: res.data.error };
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      return { success: false, error: error.response?.data?.error || error.message };
+    }
+  };
+
+  // Logout
+  const logout = () => {
+    localStorage.removeItem("ownerToken");
     setUser(null);
   };
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unsubscribe();
+  // Check for token on initial load
+  React.useEffect(() => {
+    const token = localStorage.getItem("ownerToken");
+    if (token) {
+      // Optionally, verify token with backend
+      axios
+        .get(`${backendUrl}/api/owner/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setUser(res.data.owner);
+        })
+        .catch(() => {
+          localStorage.removeItem("ownerToken");
+        });
+    }
   }, []);
 
   return (
@@ -46,5 +68,5 @@ const login = async (email, password) => {
   );
 };
 
-// ✅ Optional hook
+// Optional hook
 export const useOwnerAuth = () => useContext(OwnerAuthContext);

@@ -1,62 +1,156 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
-import { app } from "../../firebase/firebase";
+import axios from "axios";
 
-const EditSchool = () => {
-  const { id } = useParams();
-  const [schoolName, setSchoolName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const db = getFirestore(app);
+const ListSchools = () => {
+  const [schools, setSchools] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null); // current row being edited
+  const [tempData, setTempData] = useState({}); // temp storage for edited fields
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const token = localStorage.getItem("ownerToken");
+
+  // Fetch all schools
   useEffect(() => {
-    const fetchSchool = async () => {
-      const docRef = doc(db, "schools", id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setSchoolName(data.name || data.schoolName);
-        setEmail(data.email);
-      } else {
-        setMessage("School not found");
+    const fetchSchools = async () => {
+      try {
+        const res = await axios.get(`${backendUrl}/api/owner/list-schools`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setSchools(res.data.schools);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchSchool();
-  }, [id, db]);
+    fetchSchools();
+  }, [backendUrl, token]);
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
+  const handleEditClick = (school) => {
+    setEditingId(school._id);
+    setTempData({ schoolName: school.schoolName, loginId: school.loginId, password: school.password });
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setTempData({});
+  };
+
+  const handleChange = (e, field) => {
+    setTempData({ ...tempData, [field]: e.target.value });
+  };
+
+  const handleUpdate = async (id) => {
     try {
-      const docRef = doc(db, "schools", id);
-      await updateDoc(docRef, { name: schoolName, email });
-      setMessage("✅ School updated successfully!");
-    } catch (error) {
-      setMessage(`❌ Error: ${error.message}`);
+      const res = await axios.put(
+        `${backendUrl}/api/owner/school/${id}`,
+        {
+          name: tempData.schoolName,
+          email: tempData.loginId,
+          password: tempData.password,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.data.success) {
+        setSchools(schools.map(s => s._id === id ? { ...s, ...tempData } : s));
+        setEditingId(null);
+        setTempData({});
+        alert("✅ School updated successfully!");
+      } else {
+        alert(`❌ ${res.data.error || "Failed to update"}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(`❌ ${err.response?.data?.error || err.message}`);
     }
   };
 
+  const handleDelete = async (id) => {
+    if (!window.confirm("⚠️ Are you sure to delete this school?")) return;
+    try {
+      const res = await axios.delete(`${backendUrl}/api/owner/school/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data.success) {
+        setSchools(schools.filter(s => s._id !== id));
+        alert("✅ School deleted successfully!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert(`❌ ${err.response?.data?.error || err.message}`);
+    }
+  };
+
+  if (loading) return <p>Loading schools...</p>;
+
   return (
-    <div>
-      <h2>Edit School</h2>
-      <form onSubmit={handleUpdate}>
-        <input
-          type="text"
-          value={schoolName}
-          onChange={(e) => setSchoolName(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">Update School</button>
-      </form>
-      {message && <p>{message}</p>}
+    <div style={{ padding: "20px" }}>
+      <h2>All Schools</h2>
+      <table style={{ borderCollapse: "collapse", width: "100%", marginTop: "10px" }}>
+        <thead>
+          <tr style={{ background: "#f4f4f4" }}>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>School Name</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Email/Login ID</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Password</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {schools.map((school) => (
+            <tr key={school._id}>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                {editingId === school._id ? (
+                  <input
+                    type="text"
+                    value={tempData.schoolName}
+                    onChange={(e) => handleChange(e, "schoolName")}
+                  />
+                ) : (
+                  school.schoolName
+                )}
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                {editingId === school._id ? (
+                  <input
+                    type="email"
+                    value={tempData.loginId}
+                    onChange={(e) => handleChange(e, "loginId")}
+                  />
+                ) : (
+                  school.loginId
+                )}
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                {editingId === school._id ? (
+                  <input
+                    type="text"
+                    value={tempData.password}
+                    onChange={(e) => handleChange(e, "password")}
+                  />
+                ) : (
+                  "••••••••"
+                )}
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                {editingId === school._id ? (
+                  <>
+                    <button onClick={() => handleUpdate(school._id)}>Update</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => handleEditClick(school)}>Edit</button>
+                    <button onClick={() => handleDelete(school._id)}>Delete</button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default EditSchool;
+export default ListSchools;
