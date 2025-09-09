@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SchoolpannelSidebar from "../../components/schoolpaneldashboard/SchoolpannelSidebar";
+
 import SchoolpannelNavbar from "../../components/schoolpaneldashboard/SchoolpannelNavbar";
 
 import Dashboard from "./Dashboard";
