@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import SchoolpannelSidebar from "../../components/schoolpaneldashboard/SchoolpannelSidebar";
+import SchoolpannelSidebar from "../../components/schoolpaneldashboard/schoolpannelSidebar.jsx";
+import SchoolpannelNavbar from "../../components/schoolpaneldashboard/schoolpannelNavbar.jsx";
 
-import SchoolpannelNavbar from "../../components/schoolpaneldashboard/SchoolpannelNavbar";
 
 import Dashboard from "./Dashboard";
 import AddStudent from "./AddStudent";
