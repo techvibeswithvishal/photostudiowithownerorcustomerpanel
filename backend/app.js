@@ -27,6 +27,11 @@ app.use('/api/owner', ownerRoutes);
 app.use('/api/school', schoolRoutes);
 app.use('/api/student', studentRoutes);
 
+// ✅ Simple “backend is live” route
+app.get('/', (req, res) => {
+  res.send('🎉 Backend is running and you are live! 🚀');
+});
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
