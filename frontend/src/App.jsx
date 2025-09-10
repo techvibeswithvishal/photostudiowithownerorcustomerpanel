@@ -1,6 +1,6 @@
 // src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 // Public Pages
 import Home from "./pages/Home";
@@ -32,6 +32,27 @@ const SchoolProtectedRoute = ({ children }) => {
 };
 
 function App() {
+  // ✅ Wake up backend on frontend load
+  useEffect(() => {
+    const wakeBackend = async () => {
+      try {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ping`);
+        console.log("Backend woke up!");
+      } catch (err) {
+        console.error("Failed to wake backend:", err);
+      }
+    };
+
+    // Call immediately
+    wakeBackend();
+
+    // Optional: repeat every 5 minutes to keep backend warm
+    const interval = setInterval(wakeBackend, 5 * 60 * 1000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <OwnerAuthProvider>
       <SchoolAuthProvider>
