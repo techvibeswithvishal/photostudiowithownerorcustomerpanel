@@ -4,17 +4,50 @@ const {
   schoolLogin,
   addStudent,
   listStudents,
-  updateStudent
+  updateStudent,
+  getStudentById,
+  deleteStudent
 } = require("../controllers/schoolController");
 const { verifySchoolToken } = require("../middleware/authMiddleware");
+const upload = require("../middleware/uploadMiddleware");
 
-// Public
+// ==========================
+// Public Routes
+// ==========================
 router.post("/login", schoolLogin);
 
-// Protected
-router.use(verifySchoolToken); // All routes below require JWT
-router.get("/dashboard", listStudents);  // Get students for dashboard
-router.post("/student", addStudent);      // Add new student
-router.put("/student/:id", updateStudent); // Update student
+// ==========================
+// Protected Routes (JWT required)
+// ==========================
+router.use(verifySchoolToken);
+
+// Get all students
+router.get("/list", listStudents);
+
+// Get single student by ID
+router.get("/:id", getStudentById);
+
+// Add a new student (with file upload)
+router.post(
+  "/add",
+  upload.fields([
+    { name: "photoUrl", maxCount: 1 },
+    { name: "attachments", maxCount: 5 }
+  ]),
+  addStudent
+);
+
+// Update student by ID
+router.put(
+  "/:id",
+  upload.fields([
+    { name: "photoUrl", maxCount: 1 },
+    { name: "attachments", maxCount: 5 }
+  ]),
+  updateStudent
+);
+
+// Delete student by ID
+router.delete("/:id", deleteStudent);
 
 module.exports = router;

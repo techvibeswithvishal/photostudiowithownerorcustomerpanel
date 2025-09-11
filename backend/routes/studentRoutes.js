@@ -1,16 +1,49 @@
-// routes/schoolStudentRoutes.js
+// routes/studentRoutes.js
 const express = require("express");
 const router = express.Router();
-const { addStudent, listStudents, updateStudent } = require("../controllers/schoolController");
-const { verifySchoolToken } = require("../middleware/verifyToken");
+const {
+  addStudent,
+  listStudents,
+  updateStudent,
+  getStudentById,
+  deleteStudent,
+} = require("../controllers/schoolController");
+const { verifySchoolToken } = require("../middleware/authMiddleware");
+const upload = require("../middleware/uploadMiddleware");
 
-// Add new student
-router.post("/add", verifySchoolToken, addStudent);
+// ==========================
+// Protected Routes (JWT required)
+// ==========================
 
-// List students for logged-in school
+// ✅ List students
 router.get("/list", verifySchoolToken, listStudents);
 
-// Update student
-router.put("/:id", verifySchoolToken, updateStudent);
+// ✅ Get single student by ID
+router.get("/:id", verifySchoolToken, getStudentById);
+
+// ✅ Add new student (with file upload support)
+router.post(
+  "/add",
+  verifySchoolToken,
+  upload.fields([
+    { name: "photo", maxCount: 1 },       // use same name as frontend formData
+    { name: "attachments", maxCount: 5 } // allow multiple attachments
+  ]),
+  addStudent
+);
+
+// ✅ Update student
+router.put(
+  "/:id",
+  verifySchoolToken,
+  upload.fields([
+    { name: "photo", maxCount: 1 },
+    { name: "attachments", maxCount: 5 }
+  ]),
+  updateStudent
+);
+
+// ✅ DELETE student (this was missing)
+router.delete("/:id", verifySchoolToken, deleteStudent);
 
 module.exports = router;

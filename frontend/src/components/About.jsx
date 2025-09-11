@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/About.css";
 
 
+
 const About = () => {
   return (
     <section id="about" className="about-section">
@@ -22,7 +23,9 @@ const About = () => {
           </div>
           <div className="about-image">
             {/* You can add an image here later */}
-            <img src="src/assets/gallery/sample.jpg" alt="About our studio" />
+           <img src="/assets/gallery/sample.jpg" alt="About our studio" />
+
+
           </div>
         </div>
       </div>

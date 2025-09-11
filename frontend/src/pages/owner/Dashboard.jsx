@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [totalSchools, setTotalSchools] = useState(0);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL; // backend URL from .env
-  const token = localStorage.getItem("ownerToken"); // JWT from owner login
+  const backendUrl = import.meta.env.VITE_BACKEND_URL; 
+  const token = localStorage.getItem("ownerToken"); 
 
   useEffect(() => {
     const fetchSchools = async () => {
-      if (!token) return; // prevent request if no token
+      if (!token) return; 
 
       try {
         const res = await axios.get(`${backendUrl}/api/owner/list-schools`, {
@@ -17,8 +17,6 @@ const Dashboard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        // res.data.schools should be an array of school objects
         setTotalSchools(res.data.schools.length);
       } catch (error) {
         console.error("Error fetching schools:", error.response?.data?.message || error.message);
@@ -29,15 +27,66 @@ const Dashboard = () => {
   }, [backendUrl, token]);
 
   return (
-    <div style={{ maxWidth: "600px", margin: "20px auto" }}>
-      <h2>Owner Dashboard</h2>
-      <p>Total Schools Registered: {totalSchools}</p>
-      <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+    <div
+      style={{
+        maxWidth: "600px",
+        margin: "40px auto",
+        padding: "30px",
+        borderRadius: "12px",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+        backgroundColor: "#f7f9fc",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        textAlign: "center",
+      }}
+    >
+      <h2 style={{ marginBottom: "20px", color: "#333" }}>Owner Dashboard</h2>
+      <p
+        style={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          marginBottom: "30px",
+          color: "#555",
+        }}
+      >
+        Total Schools Registered: <span style={{ color: "#4CAF50" }}>{totalSchools}</span>
+      </p>
+
+      <div style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
         <Link to="/owner/create-school">
-          <button>Create New School</button>
+          <button
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "none",
+              backgroundColor: "#007BFF",
+              color: "white",
+              fontWeight: "bold",
+              cursor: "pointer",
+              transition: "background-color 0.3s",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#0069d9")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#007BFF")}
+          >
+            Create New School
+          </button>
         </Link>
         <Link to="/owner/list-schools">
-          <button>View All Schools</button>
+          <button
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "none",
+              backgroundColor: "#28a745",
+              color: "white",
+              fontWeight: "bold",
+              cursor: "pointer",
+              transition: "background-color 0.3s",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#218838")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
+          >
+            View All Schools
+          </button>
         </Link>
       </div>
     </div>

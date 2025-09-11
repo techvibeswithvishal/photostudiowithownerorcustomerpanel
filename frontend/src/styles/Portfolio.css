@@ -1,50 +1,91 @@
-.crop-container {
-  position: relative;
-  width: 400px;       /* Set fixed width */
-  height: 400px;      /* Set fixed height */
-  margin: 20px auto;  /* Center horizontally */
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #f0f0f0;
+/* Portfolio Section */
+.portfolio-section {
+  background-color: var(--card-bg); /* dynamic background to match theme */
+  padding: 4rem 1rem;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.crop-controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+.portfolio-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.crop-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-  transition: background 0.3s ease;
+.section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: var(--text-color); /* dynamic text color */
 }
 
-.crop-button.cancel {
-  background-color: #f44336;
+.portfolio-intro {
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 3rem;
+  line-height: 1.5;
 }
 
-.crop-button:hover {
-  opacity: 0.9;
+/* Portfolio Grid */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
-.thumbnail {
-  display: block;
-  width: 150px;      /* Smaller preview size */
-  height: 150px;
-  object-fit: cover;
-  margin: 10px auto;
+/* Portfolio Item Card */
+.portfolio-item {
+  background-color: var(--card-bg);
   border-radius: 8px;
-  border: 1px solid #ccc;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+  cursor: pointer;
+  position: relative;
 }
-.crop-container {
-  width: 90%;
-  max-width: 400px;
-  height: 400px;
+
+.portfolio-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+/* Portfolio Image */
+.portfolio-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Category Label */
+.portfolio-category {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-category {
+  background-color: var(--primary-color); /* keep consistent */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .portfolio-intro {
+    font-size: 0.95rem;
+  }
 }

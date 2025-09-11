@@ -31,6 +31,9 @@ app.use('/api/student', studentRoutes);
 app.get('/', (req, res) => {
   res.send('🎉 Backend is running and you are live! 🚀');
 });
+app.get('/api/ping', (req, res) => {
+  res.json({ success: true, message: "Ping received. Backend awake!" });
+});
 
 // Start server
 const PORT = process.env.PORT || 5000;

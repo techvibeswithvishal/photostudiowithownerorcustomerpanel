@@ -6,7 +6,10 @@ import { useContext, useEffect } from "react";
 import Home from "./pages/Home";
 
 // Student Panel
-import StudentPanel from "./pages/student/StudentPanel"; // New combined panel
+import StudentPanel from "./pages/student/StudentPanel";
+import AddStudent from "./pages/student/AddStudent";
+import EditStudent from "./pages/student/EditStudent"; 
+import StudentList from "./pages/student/StudentList"; 
 
 // Owner Panel
 import OwnerDashboard from "./pages/owner/Dashboard";
@@ -32,7 +35,7 @@ const SchoolProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  // ✅ Wake up backend on frontend load
+  // Wake up backend on frontend load
   useEffect(() => {
     const wakeBackend = async () => {
       try {
@@ -43,14 +46,10 @@ function App() {
       }
     };
 
-    // Call immediately
-    wakeBackend();
+    wakeBackend(); // Call immediately
 
-    // Optional: repeat every 5 minutes to keep backend warm
-    const interval = setInterval(wakeBackend, 5 * 60 * 1000);
-
-    // Cleanup interval on unmount
-    return () => clearInterval(interval);
+    const interval = setInterval(wakeBackend, 5 * 60 * 1000); // Repeat every 5 min
+    return () => clearInterval(interval); // Cleanup
   }, []);
 
   return (
@@ -58,10 +57,10 @@ function App() {
       <SchoolAuthProvider>
         <Router>
           <Routes>
-            {/* Public/Homepage Layout */}
+            {/* Public/Homepage */}
             <Route path="/" element={<Home />} />
 
-            {/* Combined Student Panel */}
+            {/* Student Panel */}
             <Route
               path="/student/dashboard"
               element={
@@ -70,8 +69,33 @@ function App() {
                 </SchoolProtectedRoute>
               }
             />
+            <Route
+              path="/student/add"
+              element={
+                <SchoolProtectedRoute>
+                  <AddStudent />
+                </SchoolProtectedRoute>
+              }
+            />
+            <Route
+              path="/student/edit-student/:id"
+              element={
+                <SchoolProtectedRoute>
+                  <EditStudent />
+                </SchoolProtectedRoute>
+              }
+            />
+            
+            <Route
+  path="/student/list"
+  element={
+    <SchoolProtectedRoute>
+      <StudentList />
+    </SchoolProtectedRoute>
+  }
+/>
 
-            {/* Owner Panel Routes */}
+            {/* Owner Panel */}
             <Route
               path="/owner/dashboard"
               element={

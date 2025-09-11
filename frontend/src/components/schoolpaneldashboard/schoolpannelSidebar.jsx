@@ -36,7 +36,7 @@ const SchoolpannelSidebar = ({ activeTab, setActiveTab }) => {
         <hr className="sidebar-divider" />
 
         {/* Divider 2: Drive */}
-        <li className="sidebar-section">Drive</li>
+        <li className="sidebar-section">Alternative way (Drive)</li>
         <li
           className={`sidebar-item ${activeTab === "drive-form" ? "active" : ""}`}
           onClick={() => setActiveTab("drive-form")}
@@ -49,6 +49,7 @@ const SchoolpannelSidebar = ({ activeTab, setActiveTab }) => {
         >
           Student List (Google Sheet)
         </li>
+        <hr className="sidebar-divider" />
 
         {/* Dashboard */}
         <li

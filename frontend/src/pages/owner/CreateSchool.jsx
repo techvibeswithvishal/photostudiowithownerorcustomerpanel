@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const CreateSchool = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); // owner-defined password
+  const [password, setPassword] = useState(""); 
   const [message, setMessage] = useState("");
 
   const { user } = useContext(OwnerAuthContext);
@@ -23,10 +23,9 @@ const CreateSchool = () => {
     }
 
     try {
-      // Call backend API with owner-provided credentials
       const res = await axios.post(
         `${backendUrl}/api/owner/create-school`,
-        { name, email, password }, // send what owner entered
+        { name, email, password },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("ownerToken")}`,
@@ -36,13 +35,9 @@ const CreateSchool = () => {
 
       setMessage(`✅ School Created! ID: ${res.data.schoolId}`);
 
-      // Clear form fields
       setName("");
       setEmail("");
       setPassword("");
-
-      // Optional: navigate to list schools
-      // navigate("/owner/list-schools");
 
     } catch (error) {
       if (error.response) {
@@ -54,11 +49,23 @@ const CreateSchool = () => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "20px auto" }}>
-      <h2>Create School Account</h2>
+    <div
+      style={{
+        maxWidth: "400px",
+        margin: "50px auto",
+        padding: "30px",
+        borderRadius: "12px",
+        boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+        backgroundColor: "#f9f9f9",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      }}
+    >
+      <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>
+        Create School Account
+      </h2>
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        style={{ display: "flex", flexDirection: "column", gap: "15px" }}
       >
         <input
           type="text"
@@ -66,6 +73,13 @@ const CreateSchool = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            outline: "none",
+            fontSize: "14px",
+          }}
         />
         <input
           type="email"
@@ -73,6 +87,13 @@ const CreateSchool = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            outline: "none",
+            fontSize: "14px",
+          }}
         />
         <input
           type="password"
@@ -80,10 +101,46 @@ const CreateSchool = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            outline: "none",
+            fontSize: "14px",
+          }}
         />
-        <button type="submit">Create School</button>
+        <button
+          type="submit"
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "none",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "background-color 0.3s",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#45a049")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+        >
+          Create School
+        </button>
       </form>
-      {message && <p style={{ marginTop: "10px" }}>{message}</p>}
+      {message && (
+        <p
+          style={{
+            marginTop: "15px",
+            padding: "10px",
+            borderRadius: "8px",
+            backgroundColor: message.startsWith("✅") ? "#d4edda" : "#f8d7da",
+            color: message.startsWith("✅") ? "#155724" : "#721c24",
+            fontWeight: "bold",
+          }}
+        >
+          {message}
+        </p>
+      )}
     </div>
   );
 };

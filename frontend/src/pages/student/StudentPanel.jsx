@@ -1,33 +1,37 @@
 import React, { useState } from "react";
-import SchoolpannelSidebar from "../../components/schoolpaneldashboard/schoolpannelSidebar.jsx";
-import SchoolpannelNavbar from "../../components/schoolpaneldashboard/schoolpannelNavbar.jsx";
-
+import SchoolpannelSidebar from "../../components/schoolpaneldashboard/SchoolpannelSidebar.jsx";
+import SchoolpannelNavbar from "../../components/schoolpaneldashboard/SchoolpannelNavbar.jsx";
 
 import Dashboard from "./Dashboard";
 import AddStudent from "./AddStudent";
 import EditStudent from "./EditStudent";
+import StudentList from "./StudentList";
 import GoogleFormLink from "../drive/GoogleFormLink";
 import GoogleSheetView from "../drive/GoogleSheetView";
 
 const StudentPanel = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [editStudentId, setEditStudentId] = useState(null);
 
   const renderTab = () => {
     switch (activeTab) {
       case "dashboard":
         return <Dashboard />;
 
-      // Drive section
+      case "mongodb-add": // Add Student tab
+        return <AddStudent setEditStudentId={setEditStudentId} />;
+
+      case "mongodb-list": // Student List tab
+        return <StudentList setEditStudentId={setEditStudentId} />;
+
+      case "edit-student":
+        return <EditStudent studentId={editStudentId} />;
+
       case "drive-form":
         return <GoogleFormLink />;
+
       case "drive-sheet":
         return <GoogleSheetView />;
-
-      // MongoDB student management
-      case "add-student":
-        return <AddStudent />;
-      case "edit-student":
-        return <EditStudent />;
 
       default:
         return <Dashboard />;
