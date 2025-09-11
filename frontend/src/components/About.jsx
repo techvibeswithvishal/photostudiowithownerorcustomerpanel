@@ -22,7 +22,7 @@ const About = () => {
             </p>
           </div>
           <div className="about-image">
-            {/* You can add an image here later */}
+           
            <img src="/assets/gallery/sample.jpg" alt="About our studio" />
 
 
