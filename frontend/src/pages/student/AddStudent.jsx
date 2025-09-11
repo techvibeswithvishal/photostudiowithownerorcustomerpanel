@@ -110,6 +110,10 @@ const AddStudent = () => {
     }
   };
 
+
+
+
+
   const handleEditClick = (student) => {
     setEditingId(student._id);
     setTempData({
@@ -132,6 +136,10 @@ const AddStudent = () => {
     setTempAttachments([]);
   };
 
+
+
+
+  
   const handleUpdate = async (id) => {
     const formData = new FormData();
     Object.keys(tempData).forEach((key) => formData.append(key, tempData[key]));
