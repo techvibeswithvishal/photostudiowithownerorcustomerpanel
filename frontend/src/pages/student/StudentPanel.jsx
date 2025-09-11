@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SchoolpannelSidebar from "../../components/schoolpaneldashboard/SchoolpannelSidebar.jsx";
-import SchoolpannelNavbar from "../../components/schoolpaneldashboard/SchoolpannelNavbar.jsx";
+import SchoolPanelSidebar from "../../components/schoolpaneldashboard/SchoolPanelSidebar.jsx";
+import SchoolPanelNavbar from "../../components/schoolpaneldashboard/SchoolPanelNavbar.jsx";
 
 import Dashboard from "./Dashboard";
 import AddStudent from "./AddStudent";
@@ -8,6 +8,7 @@ import EditStudent from "./EditStudent";
 import StudentList from "./StudentList";
 import GoogleFormLink from "../drive/GoogleFormLink";
 import GoogleSheetView from "../drive/GoogleSheetView";
+
 
 const StudentPanel = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
