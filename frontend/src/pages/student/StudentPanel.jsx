@@ -9,7 +9,6 @@ import StudentList from "./StudentList";
 import GoogleFormLink from "../drive/GoogleFormLink";
 import GoogleSheetView from "../drive/GoogleSheetView";
 
-
 const StudentPanel = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [editStudentId, setEditStudentId] = useState(null);
@@ -18,22 +17,16 @@ const StudentPanel = () => {
     switch (activeTab) {
       case "dashboard":
         return <Dashboard />;
-
-      case "mongodb-add": // Add Student tab
+      case "mongodb-add":
         return <AddStudent setEditStudentId={setEditStudentId} />;
-
-      case "mongodb-list": // Student List tab
+      case "mongodb-list":
         return <StudentList setEditStudentId={setEditStudentId} />;
-
       case "edit-student":
         return <EditStudent studentId={editStudentId} />;
-
       case "drive-form":
         return <GoogleFormLink />;
-
       case "drive-sheet":
         return <GoogleSheetView />;
-
       default:
         return <Dashboard />;
     }
@@ -41,9 +34,9 @@ const StudentPanel = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <SchoolpannelSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <SchoolPanelSidebar activeTab={activeTab} setActiveTab={setActiveTab} /> {/* ✅ Correct spelling */}
       <div style={{ flex: 1 }}>
-        <SchoolpannelNavbar />
+        <SchoolPanelNavbar /> {/* ✅ Correct spelling */}
         <div style={{ padding: "2rem" }}>{renderTab()}</div>
       </div>
     </div>
