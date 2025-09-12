@@ -1,46 +1,68 @@
-import React, { useState } from "react";
-import SchoolPanelSidebar from "../../components/schoolpaneldashboard/SchoolPanelSidebar.jsx";
-import SchoolPanelNavbar from "../../components/schoolpaneldashboard/SchoolPanelNavbar.jsx";
+// src/components/schoolpaneldashboard/SchoolpannelSidebar.jsx
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../../styles/SchoolpannelSidebar.css";
 
-import Dashboard from "./Dashboard";
-import AddStudent from "./AddStudent";
-import EditStudent from "./EditStudent";
-import StudentList from "./StudentList";
-import GoogleFormLink from "../drive/GoogleFormLink";
-import GoogleSheetView from "../drive/GoogleSheetView";
-
-const StudentPanel = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
-  const [editStudentId, setEditStudentId] = useState(null);
-
-  const renderTab = () => {
-    switch (activeTab) {
-      case "dashboard":
-        return <Dashboard />;
-      case "mongodb-add":
-        return <AddStudent setEditStudentId={setEditStudentId} />;
-      case "mongodb-list":
-        return <StudentList setEditStudentId={setEditStudentId} />;
-      case "edit-student":
-        return <EditStudent studentId={editStudentId} />;
-      case "drive-form":
-        return <GoogleFormLink />;
-      case "drive-sheet":
-        return <GoogleSheetView />;
-      default:
-        return <Dashboard />;
-    }
-  };
+const SchoolpannelSidebar = ({ activeTab, setActiveTab }) => {
+  const navigate = useNavigate();
 
   return (
-    <div style={{ display: "flex" }}>
-      <SchoolPanelSidebar activeTab={activeTab} setActiveTab={setActiveTab} /> {/* ✅ Correct spelling */}
-      <div style={{ flex: 1 }}>
-        <SchoolPanelNavbar /> {/* ✅ Correct spelling */}
-        <div style={{ padding: "2rem" }}>{renderTab()}</div>
-      </div>
+    <div className="sidebar">
+      <h3 className="sidebar-title">Menu</h3>
+      <ul className="sidebar-list">
+        {/* Go Back Home */}
+        <li
+          className="sidebar-item sidebar-home"
+          onClick={() => navigate("/")}
+        >
+          ⬅ Go Back Home
+        </li>
+
+        {/* Divider 1: MongoDB */}
+        <li className="sidebar-section">MongoDB</li>
+        <li
+          className={`sidebar-item ${activeTab === "mongodb-add" ? "active" : ""}`}
+          onClick={() => setActiveTab("mongodb-add")}
+        >
+          Add Student
+        </li>
+        <li
+          className={`sidebar-item ${activeTab === "mongodb-list" ? "active" : ""}`}
+          onClick={() => setActiveTab("mongodb-list")}
+        >
+          Student List
+        </li>
+
+        <hr className="sidebar-divider" />
+
+        {/* Divider 2: Drive */}
+        <li className="sidebar-section">Alternative way (Drive)</li>
+        <li
+          className={`sidebar-item ${activeTab === "drive-form" ? "active" : ""}`}
+          onClick={() => setActiveTab("drive-form")}
+        >
+          Add Student (Google Form)
+        </li>
+        <li
+          className={`sidebar-item ${activeTab === "drive-sheet" ? "active" : ""}`}
+          onClick={() => setActiveTab("drive-sheet")}
+        >
+          Student List (Google Sheet)
+        </li>
+        <hr className="sidebar-divider" />
+
+        {/* Dashboard */}
+        <li
+          className={`sidebar-item ${activeTab === "dashboard" ? "active" : ""}`}
+          onClick={() => setActiveTab("dashboard")}
+        >
+          Dashboard
+        </li>
+
+        <hr className="sidebar-divider" />
+      </ul>
     </div>
   );
 };
 
-export default StudentPanel;
+export default SchoolpannelSidebar;
