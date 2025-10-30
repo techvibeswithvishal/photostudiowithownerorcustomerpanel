@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer-content">
         <p>
           &copy; {new Date().getFullYear()}{" "}
-          <span className="brand">Yadav Photo Studio</span>. All rights
+          <span className="brand"></span>. All rights
           reserved.
         </p>
 

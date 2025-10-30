@@ -25,7 +25,7 @@ function Navbar() {
         onClick={() => setShowOwnerLogin(true)} // 👈 open owner login
         style={{ cursor: "pointer" }}
       >
-        Yadav Photo Studio
+      FrameZone
       </h1>
 
       <nav className="nav-links">
