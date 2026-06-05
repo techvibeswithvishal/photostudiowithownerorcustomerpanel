@@ -1,4 +1,4 @@
-# 📸 FrameZone - Photo Studio Management System
+# 📸 FrameZone - School & Photography Management System
 
 <div align="center">
 
@@ -10,23 +10,6 @@
 
 </div>
 
----
-# 📸 FrameZone - School & Photography Management System
-
-<div align="center">
-
-# 🎓📷 FrameZone
-
-### School • University • Event • Studio Management Platform
-
-A complete management system for photography studios that work with schools, universities, events, and private clients.
-
-🌐 Live Demo:
-https://photostudiowithownerorcustomerpanel-nine.vercel.app/
-
-</div>
-
----
 
 # 🚀 Project Overview
 
