@@ -1,37 +1,61 @@
 import React from "react";
-import { FaLinkedin, FaEnvelope } from "react-icons/fa"; // real icons
+import {
+  FaLinkedin,
+  FaGithub,
+  FaEnvelope,
+  FaGlobe,
+} from "react-icons/fa";
+
 import "../styles/Footer.css";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p>
-          &copy; {new Date().getFullYear()}{" "}
-          <span className="brand"></span>. All rights
-          reserved.
-        </p>
 
-        <p className="designer">
-          Website designed by{" "}
+        <h3 className="footer-brand">
+          Vishal Singh
+        </h3>
+
+        
+
+        <div className="footer-links">
+
           <a
             href="https://www.linkedin.com/in/techvibeswithvishal/"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link"
           >
-            <FaLinkedin style={{ marginRight: "6px" }} />
-            Vishal Singh (@techvibeswithvishal)
-          </a>{" "}
-          ||{" "}
+            <FaLinkedin /> LinkedIn
+          </a>
+
           <a
-            href="mailto:4848vishalsingh@gmail.com"
+            href="https://github.com/techvibeswithvishal"
+            target="_blank"
+            rel="noopener noreferrer"
             className="footer-link"
           >
-            <FaEnvelope style={{ marginRight: "6px" }} />
-            4848vishalsingh@gmail.com
+            <FaGithub /> GitHub
           </a>
-        </p>
+
+          
+
+          <a
+            href="https://vishalsingh.yokonix.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            <FaGlobe /> Portfolio
+          </a>
+
+        </div>
+
+        <p className="copyright">
+  © 2025 Vishal Singh. All Rights Reserved.
+</p>
+
       </div>
     </footer>
   );

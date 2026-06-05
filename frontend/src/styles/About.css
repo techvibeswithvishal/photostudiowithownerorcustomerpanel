@@ -1,61 +1,94 @@
-/* About Section */
+/* =========================
+   About Section
+========================= */
 .about-section {
-  background-color: var(--card-bg);  /* uses theme variable */
-  padding: 4rem 1rem;
-  transition: background-color 0.3s, color 0.3s;
+  padding: 80px 20px;
+  background: var(--bg-color);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.about-section .container {
+  max-width: 1300px;
+  margin: auto;
 }
 
+/* =========================
+   Heading
+========================= */
 .section-title {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.8rem;
+  margin-bottom: 50px;
   text-align: center;
-  margin-bottom: 2rem;
-  color: var(--text-color); /* dynamic text color */
+  color: var(--text-color);
 }
 
+/* =========================
+   Content Layout
+========================= */
 .about-content {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 2rem;
+  gap: 50px;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .1);
 }
 
+/* =========================
+   Text
+========================= */
 .about-text {
-  flex: 1 1 50%;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--text-color);  /* dynamic text color */
+  flex: 1;
+  color: var(--text-color);
 }
 
 .about-text p {
-  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
 }
 
+/* =========================
+   Image
+========================= */
 .about-image {
-  flex: 1 1 40%;
+  flex: 1;
   text-align: center;
 }
 
 .about-image img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 450px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .1);
+  transition: .4s;
 }
 
-/* Responsive */
+.about-image img:hover {
+  transform: scale(1.03);
+}
+
+/* =========================
+   Mobile
+========================= */
 @media (max-width: 768px) {
   .about-content {
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
+    padding: 25px;
+    gap: 30px;
   }
 
-  .about-text, .about-image {
-    flex: 1 1 100%;
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+  }
+
+  .about-image img {
+    max-width: 300px;
   }
 }
