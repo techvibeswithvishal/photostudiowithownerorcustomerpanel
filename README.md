@@ -11,199 +11,215 @@
 </div>
 
 ---
+# 📸 FrameZone - School & Photography Management System
 
-## ✨ Project Overview
+<div align="center">
 
-FrameZone is a modern Photo Studio Management System designed to streamline studio operations and improve customer experience.
+# 🎓📷 FrameZone
 
-The platform provides dedicated panels for both Studio Owners and Customers, allowing efficient management of bookings, photo orders, project tracking, and communication.
+### School • University • Event • Studio Management Platform
 
-Inspired by modern photography management workflows and client management systems.
+A complete management system for photography studios that work with schools, universities, events, and private clients.
 
----
+🌐 Live Demo:
+https://photostudiowithownerorcustomerpanel-nine.vercel.app/
 
-## 🎯 Key Features
-
-### 👨‍💼 Owner Panel
-
-✅ Dashboard Overview
-
-✅ Manage Customers
-
-✅ Manage Orders
-
-✅ Booking Management
-
-✅ Project Tracking
-
-✅ Service Management
-
-✅ Studio Analytics
-
-✅ Secure Login System
+</div>
 
 ---
 
-### 👤 Customer Panel
+# 🚀 Project Overview
 
-✅ User Registration & Login
+FrameZone is a modern photography management platform designed for studios that handle large-scale educational photography projects as well as traditional photography services.
 
-✅ Book Photography Sessions
+The system allows studio owners to manage schools, universities, students, events, bookings, customer records, and photography services from a single dashboard.
+
+---
+
+# 🎯 Primary Business Use
+
+## 🎓 Schools & Universities
+
+The main goal of FrameZone is to help photography studios manage educational institutions.
+
+Studio owners can:
+
+✅ Create School Accounts
+
+✅ Create University Accounts
+
+✅ Manage Student Records
+
+✅ Generate Client Login Credentials
+
+✅ Share Student Photos
+
+✅ Manage Admit Card Photography
+
+✅ Manage ID Card Photography
+
+✅ Handle Convocation Photography
+
+✅ Organize Batch-wise Student Data
+
+---
+
+# 👨‍💼 Admin Panel Features
+
+The Admin Panel is designed for Studio Owners.
+
+### Admin can:
+
+✅ Create Client Accounts
+
+✅ Generate Login IDs & Passwords
+
+✅ Manage Schools
+
+✅ Manage Universities
+
+✅ Manage Students
+
+✅ Upload Student Photographs
 
 ✅ Track Orders
 
-✅ View Booking Status
+✅ Manage Photography Projects
 
-✅ Contact Studio
+✅ Manage Customer Bookings
 
-✅ Manage Profile
-
----
-
-### 🎨 User Experience
-
-✅ Responsive Design
-
-✅ Mobile Friendly
-
-✅ Modern UI/UX
-
-✅ Dark & Light Theme Support
-
-✅ Fast Navigation
+✅ View Studio Dashboard
 
 ---
 
-## 🛠️ Tech Stack
+# 👤 Client Panel Features
+
+Each school or client receives their own login credentials.
+
+### Clients can:
+
+✅ Login Securely
+
+✅ View Assigned Photos
+
+✅ Track Projects
+
+✅ Download Shared Content
+
+✅ View Student Data
+
+✅ Access Photography Deliverables
+
+---
+
+# 📷 Photography Services
+
+Apart from educational projects, FrameZone also supports:
+
+### Wedding Photography
+
+Capture memorable wedding moments.
+
+### Birthday Celebrations
+
+Professional birthday event coverage.
+
+### Corporate Events
+
+Business event photography and branding shoots.
+
+### Portrait Sessions
+
+Professional portrait photography.
+
+### Creative Shoots
+
+Custom creative photography projects.
+
+### Photo Editing & Retouching
+
+Professional image enhancement services.
+
+---
+
+# 🛠️ Tech Stack
 
 ### Frontend
 
 * React.js
+* JavaScript
 * CSS3
-* JavaScript (ES6+)
 * React Router
 
-### Development Tools
+### Deployment
 
-* Vite
-* Git
-* GitHub
 * Vercel
 
+### Version Control
+
+* Git
+* GitHub
+
 ---
 
-## 📂 Project Structure
+# 📂 Project Modules
 
-```bash
-src/
+```text
+FrameZone
 │
-├── components/
-├── pages/
-├── assets/
-├── styles/
-├── routes/
-├── hooks/
-├── context/
+├── Home
+├── About
+├── Services
+├── Portfolio
+├── Contact
 │
-├── App.jsx
-└── main.jsx
+├── Admin Panel
+│   ├── Create Clients
+│   ├── Manage Schools
+│   ├── Manage Universities
+│   ├── Manage Students
+│   └── Manage Projects
+│
+└── Client Panel
+    ├── Login
+    ├── View Projects
+    ├── Access Photos
+    └── Download Deliverables
 ```
 
 ---
 
-## 🚀 Installation
+# 🔮 Future Enhancements
 
-### Clone Repository
-
-```bash
-git clone https://github.com/yourusername/framezone.git
-```
-
-### Move into Project
-
-```bash
-cd framezone
-```
-
-### Install Dependencies
-
-```bash
-npm install
-```
-
-### Run Development Server
-
-```bash
-npm run dev
-```
-
----
-
-## 📸 Screenshots
-
-Add your screenshots here:
-
-```md
-/assets/screenshots/home.png
-/assets/screenshots/dashboard.png
-/assets/screenshots/customer-panel.png
-```
-
----
-
-## 🌟 Future Enhancements
-
-* Firebase Authentication
+* MongoDB Integration
+* Role Based Authentication
+* Student Photo Database
+* Admit Card Generation
+* ID Card Generation
+* Certificate Management
 * Online Payments
-* Cloud Image Storage
-* Customer Notifications
-* Appointment Scheduling
-* Invoice Generation
-* Gallery Management
-* Admin Analytics Dashboard
+* SMS Notifications
+* Email Notifications
+* Cloud Storage
+* Analytics Dashboard
 
 ---
 
-## 🔐 Security Features
+# 👨‍💻 Developer
 
-* Protected Routes
-* Authentication System
-* Role-Based Access
-* Secure User Data Handling
+## Vishal Singh
 
----
+Full Stack Developer | Python Developer | Cyber Security Enthusiast
 
-## 📈 Project Goals
+📧 Email:
+[vishal.singh.dev06@gmail.com](mailto:vishal.singh.dev06@gmail.com)
 
-This project aims to:
+🔗 LinkedIn:
+https://www.linkedin.com/in/techvibeswithvishal/
 
-* Digitize studio management workflows.
-* Simplify customer interactions.
-* Improve booking management.
-* Provide a centralized dashboard for studio operations.
-
-These goals align with common capabilities found in modern photography studio management platforms.
+🔗 GitHub:
+https://github.com/techvibeswithvishal
 
 ---
 
-## 👨‍💻 Developer
-
-### Vishal Singh
-
-
-
-📧 Email: [vishal.singh.dev06@gmail.com](mailto:vishal.singh.dev06@gmail.com)
-
-🔗 LinkedIn: https://www.linkedin.com/in/techvibeswithvishal/
-
-🔗 GitHub: https://github.com/techvibeswithvishal
-
----
-
-<div align="center">
-
-### ⭐ If you like this project, give it a star!
-
-![Visitor Count](https://komarev.com/ghpvc/?username=techvibeswithvishal\&color=0d6efd\&style=for-the-badge)
-
-</div>
+### ⭐ If you like this project, give it a star on GitHub.
