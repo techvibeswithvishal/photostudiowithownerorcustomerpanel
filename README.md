@@ -73,6 +73,11 @@ The Admin Panel is designed for Studio Owners.
 
 ✅ View Studio Dashboard
 
+<img width="1363" height="766" alt="Screenshot (299)" src="https://github.com/user-attachments/assets/3ed7b367-3055-4045-85e0-a940dfafa4a2" />
+
+
+
+
 ---
 
 # 👤 Client Panel Features
@@ -92,6 +97,10 @@ Each school or client receives their own login credentials.
 ✅ View Student Data
 
 ✅ Access Photography Deliverables
+
+
+
+<img width="1366" height="768" alt="Screenshot (300)" src="https://github.com/user-attachments/assets/bb2d0789-a422-49d6-bb3c-5ea1ac540209" />
 
 ---
 
